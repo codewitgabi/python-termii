@@ -79,7 +79,8 @@ class Termii:
             payload["media"] = media
             del payload["sms"]
 
-        response = requests.post(f"{self.__base_url}/sms/send/", json=payload, headers=headers)
+        response = requests.post(
+            f"{self.__base_url}/sms/send/", json=payload, headers=headers)
 
         return response.json()
 
@@ -110,6 +111,114 @@ class Termii:
             'Content-Type': 'application/json',
         }
 
-        response = requests.post(f"{self.__base_url}/sms/send/bulk", json=payload, headers=headers)
+        response = requests.post(
+            f"{self.__base_url}/sms/send/bulk", json=payload, headers=headers)
+
+        return response.json()
+
+    def send_auto_message(self, to: str, sms: str) -> Response:
+        """
+        This API allows businesses send messages to customers using Termii's auto-generated messaging numbers that adapt to customers location.
+
+        Arguments:
+
+        to (str): Represents the destination phone number. Phone number must be in the international format (Example: 2349012672711)
+
+        sms (str): Text of a message that would be sent to the destination phone number
+        """
+
+        payload = {
+            "to": to,
+            "sms": sms,
+            "api_key": self.api_key
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        response = requests.post(
+            f"{self.__base_url}/sms/number/send", headers=headers, json=payload)
+
+        return response.json()
+
+    def get_phonebooks(self) -> Response:
+        """
+        Get phonebooks using these APIs. Each phonebook can be identified by a unique ID, which makes it easier to edit or delete a phonebook.
+        """
+
+        response = requests.get(
+            f"{self.__base_url}/phonebooks?api_key={self.api_key}")
+        
+        print(response.json())
+        return response.json()
+
+    def create_phonebook(self, phonebook_name: str, description: Optional[str] = None) -> Response:
+        """
+        Create a phonebook
+
+        Arguments:
+
+        phonebook_name (str): Name of the phonebook
+
+        description (str): Description of the phonebook, not required
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "phonebook_name": phonebook_name,
+        }
+
+        if description:
+            payload["description"] = description
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/phonebooks", headers=headers, json=payload)
+
+        return response.json()
+
+    def update_phonebook(self, phonebook_id: str, phonebook_name: str, description: Optional[str] = None) -> Response:
+        """
+        Update phonebook with the given phonebook_id
+
+        Arguments:
+
+        phonebook_id (str): ID of the phonebook
+
+        phonebook_name (str): Name of the phonebook
+
+        description (str): Description of the phonebook, not required
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "phonebook_name": phonebook_name,
+        }
+
+        if description:
+            payload["description"] = description
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.patch(
+            f"{self.__base_url}/phonebooks/{phonebook_id}", headers=headers, json=payload)
+
+        return response.json()
+
+    def delete_phonebook(self, phonebook_id: str) -> Response:
+        """Delete a phonebook
+
+        Argument:
+
+        phonebook_id (str): ID of the phonebook to be deleted
+        """
+
+        response = requests.delete(
+            f"{self.__base_url}/phonebooks/{phonebook_id}?api_key={self.api_key}")
 
         return response.json()

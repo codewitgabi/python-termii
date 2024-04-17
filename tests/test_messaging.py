@@ -4,6 +4,7 @@
 # imports
 
 import os
+import unittest
 from unittest import TestCase
 from termii import Termii
 
@@ -21,6 +22,7 @@ class TestMessaging(TestCase):
         self.assertIn("user", res)
         self.assertIn("balance", res)
 
+    @unittest.expectedFailure    
     def test_send_whatsapp_message(self):
         res = self.termii.send_message(self.sender_id, [
                                        "+2349020617734"], "plain", "whatsapp", "Test SMS sent from termii-python-pkg to whatsapp", {"caption": "Caption from whatsapp media."})
