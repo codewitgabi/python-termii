@@ -67,7 +67,7 @@ To request a new sender id, you need to pass the following parameters
 
     * type (str): The kind of message that is sent, which is a plain message.
 
-    *channel (Literal["whatsapp", "dnd", "generic"]): This is the route through which the message is sent. It is either dnd, whatsapp, or generic
+    * channel (Literal["whatsapp", "dnd", "generic"]): This is the route through which the message is sent. It is either dnd, whatsapp, or generic
 
     * media (Optional[Mapping[Literal["url", "caption"], str]]): This is a media object, it is only available for the High Volume WhatsApp. When using the media parameter, ensure you are not using the sms parameter
         
