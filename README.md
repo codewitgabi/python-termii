@@ -1,13 +1,25 @@
-# TERMII PYTHON
+<h1 align="center">Termii Python Client</h1>
+<br><br>
 
-### WHAT IS TERMII
+<div align="center">
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/t/codewitgabi/python-termii">
+    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/codewitgabi/python-termii">
+    <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/codewitgabi/python-termii">
+    <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/codewitgabi/python-termii">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/codewitgabi/python-termii">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/codewitgabi/python-termii">
+    <img alt="GitHub Tag" src="https://img.shields.io/github/v/tag/codewitgabi/python-termii">
+    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/termii-python-client">
+</div>
+
+<hr/>
+
+### What is Termii
 
 Termii is an API that provide endpoint which can be used to send sms messages, it also perform other functions which will be discussed below.
 click [here](https://developer.termii.com/) for more about Termii
 
-# PROJECT DESCRIPTION
-
-### KEY FEATURES
+### Key Features
 
 - Messaging: Allows you to send message to any country in the world across sms and whatsapp channels
 
@@ -15,62 +27,71 @@ click [here](https://developer.termii.com/) for more about Termii
 
 - Insight: Retrieve real-time delivery report of messages sent to customers as well as the status of their contact.
 
-### INSTALLATION
+### Usage
+
 Install the python package from pip by running
-```
-pip install termii-python-client==1.0.0
+
+```shell
+pip install termii-python-client
 ```
 
-### USAGE
-Before delving into the usage, you need the follow
-ing:
-* A Termii account : This can be created [here](www.termii.com)
+Before delving into the usage, you need the following:
 
-* Get your api key which will be used for further calls
+- A Termii account : This can be created [here](www.termii.com)
+
+- Get your api key which will be used for further api calls
 
 #### Implementing python termii functionalities
 
 - **Initillize the Termii class**
-    ```
-    import Termii
 
-    # get your api-key 
-    api_key = "1236erhrbdjd"
+```python
+import os
+from termii import Termii
 
-    termii = Termii(api_key,sender_id)
+# get your api-key
+api_key = os.environ.get("TERMII_API_KEY")
+sender_id = os.environ.get("TERMII_SENDER_ID")
 
-    ```
+termii = Termii(api_key, sender_id)
+```
 
-- **Getting senderId**: this project also provide a method to get senders id 
+#### Available methods
 
-    ``` termii.get_senderId() ```
+```python
+import os
+from typing import Union, Literal
+from termii import Termii
 
-- **requesting new sender id**: 
-To request a new sender id, you need to pass the following parameters
-    * sender_id(str) : which is your previous sender id
-    * use_case(str) : A sample of the type of message sent.. Should be >= 20 characters.
-    * Company(str): Represents the name of the company with the sender id.
+termii = Termii(os.environ.get("TERMII_API_KEY"), os.environ.get("TERMII_SENDER_ID"))
 
-    With the above parameters you can request a new sender id by calling the function below
+termii.add_contact(phonebook_id: str, phone_number: str, country_code: Optional[int] = None, email_address: Optional[str] = None, first_name: Optional[str] = None, last_name: Optional[str] = None, company: Optional[str] = None)
+termii.add_contacts(phonebook_id: str, contact_file: str, file_type: str, country_code: str)
+termii.create_phonebook(phonebook_name: str, description: Optional[str] = None)
+termii.delete_contact(contact_id: str)
+termii.delete_phonebook(phonebook_id: str)
+termii.email_token(email_address: str, code: str, email_configuration_id: str)
+termii.generate_token(pin_type: Literal["NUMERIC", "ALPHANUMERIC"], phone_number: str, pin_attempts: int, pin_time_to_live: int, pin_length: int)
+termii.get_balance()
+termii.get_contact(phonebook_id: str)
+termii.get_phonebooks()
+termii.get_senderId()
+termii.history()
+termii.request_senderId(sender_id: str, use_case: str, company: str)
+termii.send_auto_message(to: str, sms: str)
+termii.send_bulk_message(_from: Union[str, None], to: Union[str, list], sms: Optional[str], type: str, channel: Literal["whatsapp", "dnd", "generic"])
+termii.send_message(_from: str, to: str | None, type: str, channel: Literal["whatsapp", "dnd", "generic"], sms: Union[str, None] = None, media: Union[Optional[Mapping[Literal["url", "caption"], str]], None] = None)
+termii.send_token(message_type: Literal["NUMERIC", "ALPHANUMERIC"], to: str, _from: str, channel: Literal["generic", "dnd", "whatsapp"], message_text: str, pin_time_to_live: int = 60, pin_attempts: int = 3, pin_length: int = 4, pin_placeholder: str = "< 1234 >")
+termii.update_phonebook(phonebook_id: str, phonebook_name: str, description: Optional[str] = None)
+termii.verify_phone_number(phone_number: str)
+termii.verify_token(pin_id: str, pin: str)
+termii.voice_call(phone_number: str, code: str)
+termii.voice_token(phone_number: str, pin_attempts: int, pin_time_to_live: int, pin_length: int)
+```
 
-    ``` termii.request_senderId(sender_id,use_case,company) ```
+To get more detail about a particular method, use the python help() function
 
-- **Send Message**: This method allows you to send message
-    
-    ``` termii.send_message(from,to,type,sms,channel,media)```
-    * from (str): Represents the ID of the sender which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters (Example:CompanyName)
+#### Contributors
 
-    * to (str): Represents the destination phone number. Phone number must be in the international format (Example: 23490126727). You can also send to multiple numbers. To do so put numbers in an array (Example: ["23490555546", "23423490126999"]) Please note: the array takes only 100 phone numbers at a time
-
-    * sms (str): Text of a message that would be sent to the destination phone number
-
-    * type (str): The kind of message that is sent, which is a plain message.
-
-    * channel (Literal["whatsapp", "dnd", "generic"]): This is the route through which the message is sent. It is either dnd, whatsapp, or generic
-
-    * media (Optional[Mapping[Literal["url", "caption"], str]]): This is a media object, it is only available for the High Volume WhatsApp. When using the media parameter, ensure you are not using the sms parameter
-        
-
-
-
-
+- Gabriel Michael Ojomakpene [codewitgabi]
+- Joseph Joshua

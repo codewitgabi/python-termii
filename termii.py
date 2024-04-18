@@ -9,7 +9,10 @@ class Termii:
     def __init__(self, api_key: str, sender_id: Union[str, None] = None) -> None:
         self.api_key = api_key
         self.sender_id = sender_id
-        self.__base_url = "https://api.ng.termii.com/api"
+
+    @property
+    def __base_url(self):
+        return "https://api.ng.termii.com/api"
 
     def get_senderId(self) -> Response:
         """Get a list of all sender IDs for the specified api key.
