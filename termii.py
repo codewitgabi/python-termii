@@ -516,3 +516,37 @@ class Termii:
             f"{self.__base_url}/sms/otp/generate", headers=headers, json=payload)
 
         return response.json()
+
+    def get_balance(self) -> Response:
+        """
+        The Balance API returns your total balance and balance information from your wallet, such as currency.
+        """
+
+        response = requests.get(
+            f"{self.__base_url}/get-balance?api_key={self.api_key}")
+
+        return response.json()
+
+    def verify_phone_number(self, phone_number: str) -> Response:
+        """
+        The search API allows businesses verify phone numbers and automatically detect their status as well as current network. It also tells if the number has activated the do-not-disturb settings.
+
+        Arguments:
+
+        phone_number (str): Represents the phone number to be verified. Phone number must be in the international format (Example: 23490126727)
+        """
+
+        response = requests.get(
+            f"{self.__base_url}/check/dnd?api_key={self.api_key}&phone_number={phone_number}")
+
+        return response.json()
+
+    def history(self) -> Response:
+        """
+        This Inbox API returns reports for messages sent across the sms, voice & whatsapp channels. Reports can either display all messages on termii or a single message.
+        """
+
+        response = requests.get(
+            f"{self.__base_url}/sms/inbox?api_key={self.api_key}")
+
+        return response.json()
