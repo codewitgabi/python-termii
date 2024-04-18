@@ -24,8 +24,7 @@ pip install termii-python-client==1.0.0
 ### USAGE
 Before delving into the usage, you need the follow
 ing:
-* A Termii account : This can be created [here] (w
-ww.termii.com)
+* A Termii account : This can be created [ here ]( www.termii.com )
 
 * Get your api key which will be used for further calls
 
