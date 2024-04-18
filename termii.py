@@ -148,7 +148,7 @@ class Termii:
 
         response = requests.get(
             f"{self.__base_url}/phonebooks?api_key={self.api_key}")
-        
+
         print(response.json())
         return response.json()
 
@@ -220,5 +220,99 @@ class Termii:
 
         response = requests.delete(
             f"{self.__base_url}/phonebooks/{phonebook_id}?api_key={self.api_key}")
+
+        return response.json()
+
+    def get_contact(self, phonebook_id: str):
+        """
+        Get all available contacts
+        """
+
+        response = requests.get(
+            f"{self.__base_url}/phonebooks/{phonebook_id}/contacts?api_key={self.api_key}")
+        
+        print(response.json())
+        return response.json()
+
+    def add_contact(self, phonebook_id: str, phone_number: str, country_code: Optional[int] = None, email_address: Optional[str] = None, first_name: Optional[str] = None, last_name: Optional[str] = None, company: Optional[str] = None) -> Response:
+        """
+        Adds a single contact to a phonebook
+
+        Arguments:
+
+        phonebook_id (str): The id of the phonebook to add contact
+
+        phone_number (str): Phone number of the contact
+
+        country_code (Optional[str]): Represents short numeric geographical codes developed to represent countries (Example: 234 ).
+
+        email_address (Optional[str]): email address of the contact
+
+        first_name (Optional[str]): first name of the contact
+
+        last_name (Optional[str]): last name of the contact
+
+        company (Optional[str]): name of the company of the contact
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "phone_number": phone_number,
+            "email_address": email_address,
+            "first_name": first_name,
+            "last_name": last_name,
+            "company": company,
+            "country_code": country_code
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/phonebooks/{phonebook_id}/contacts", headers=headers, json=payload)
+
+        return response.json()
+
+    def add_contacts(self, phonebook_id: str, contact_file: str, file_type: str, country_code: str) -> Response:
+        """
+        Add bulk contacts to a phonebook
+
+        Arguments:
+
+        phonebook_id (str): The id of the phonebook to add contacts
+
+        contact_file (str): File containing the list of contacts you want to add to your phonebook. Supported files include : 'txt', 'xlsx', and 'csv'.
+
+        file_type (str): The type of file that contains your contacts. Example: 'text/csv'.
+
+        country_code (str): Represents short numeric geographical codes developed to represent countries (Example: 234 ).
+        """
+
+        payload = {'country_code': country_code}
+
+        files = [
+            ('contact_file', (contact_file, 'rb'), file_type)
+        ]
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(f"{self.__base_url}/phonebooks/{
+                                 phonebook_id}/contacts", headers=headers, data=payload, files=files)
+
+        return response.json()
+
+    def delete_contact(self, contact_id: str) -> Response:
+        """Delete a contact
+
+        Argument:
+
+        contact_id (str): Id of contact to be deleted.
+        """
+
+        response = requests.delete(
+            f"{self.__base_url}/phonebook/contact/{contact_id}?api_key={self.api_key}")
 
         return response.json()

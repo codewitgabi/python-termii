@@ -45,11 +45,11 @@ class TestPhonebook(TestCase):
         self.assertIn("data", res)
 
     def test_update_phonebook(self):
-        res = self.termii.delete_phonebook(
-            "c180920c-8bd0-40c8-8ad2-47a77379ab54")
+        res = self.termii.update_phonebook(
+            "11f390d2-8bd6-48dd-9f9f-65a3e2b2267b", "Updated phonebook")
 
         self.assertDictEqual(
-            res, {'message': 'Phone Book Has been Updated Successfully'})
+            res, {'message': 'Phonebook Updated Successfully'})
 
     @unittest.expectedFailure
     def test_delete_phonebook(self):

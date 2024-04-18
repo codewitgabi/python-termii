@@ -32,7 +32,7 @@ class TestMessaging(TestCase):
         self.assertIn("balance", res)
 
     def test_whatsapp_device_404_error(self):
-        res = self.termii.send_message("TID", [
+        res = self.termii.send_message(self.sender_id, [
                                        "+2349020617734"], "plain", "whatsapp", "Test SMS sent from termii-python-pkg to whatsapp", {"caption": "Caption from whatsapp media."})
 
         self.assertDictEqual(
