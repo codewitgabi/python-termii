@@ -3,7 +3,7 @@
 ### WHAT IS TERMII
 
 Termii is an API that provide endpoint which can be used to send sms messages, it also perform other functions which will be discussed below.
-click [here] (https://developer.termii.com/) for more about Termii
+click [here](https://developer.termii.com/) for more about Termii
 
 # PROJECT DESCRIPTION
 
@@ -24,7 +24,7 @@ pip install termii-python-client==1.0.0
 ### USAGE
 Before delving into the usage, you need the follow
 ing:
-* A Termii account : This can be created [ here ]( www.termii.com )
+* A Termii account : This can be created [here](www.termii.com)
 
 * Get your api key which will be used for further calls
 
