@@ -31,7 +31,7 @@ ww.termii.com)
 
 #### Implementing python termii functionalities
 
-- Initillize the Termii class 
+- **Initillize the Termii class**
     ```
     import Termii
 
@@ -42,19 +42,36 @@ ww.termii.com)
 
     ```
 
-- Getting senderId: this project also provide a method to get senders id 
+- **Getting senderId**: this project also provide a method to get senders id 
 
     ``` termii.get_senderId() ```
 
-- requesting new sender id: 
+- **requesting new sender id**: 
 To request a new sender id, you need to pass the following parameters
     * sender_id(str) : which is your previous sender id
     * use_case(str) : A sample of the type of message sent.. Should be >= 20 characters.
     * Company(str): Represents the name of the company with the sender id.
 
-With tge above parameters you can request a new sender id by calling the function below
+    With the above parameters you can request a new sender id by calling the function below
 
-``` termii.request_senderId(sender_id,use_case,company) ```
+    ``` termii.request_senderId(sender_id,use_case,company) ```
+
+- **Send Message**: This method allows you to send message
+    
+    ``` termii.send_message(from,to,type,sms,channel,media)```
+    * from (str): Represents the ID of the sender which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters (Example:CompanyName)
+
+    * to (str): Represents the destination phone number. Phone number must be in the international format (Example: 23490126727). You can also send to multiple numbers. To do so put numbers in an array (Example: ["23490555546", "23423490126999"]) Please note: the array takes only 100 phone numbers at a time
+
+    * sms (str): Text of a message that would be sent to the destination phone number
+
+    * type (str): The kind of message that is sent, which is a plain message.
+
+    *channel (Literal["whatsapp", "dnd", "generic"]): This is the route through which the message is sent. It is either dnd, whatsapp, or generic
+
+    * media (Optional[Mapping[Literal["url", "caption"], str]]): This is a media object, it is only available for the High Volume WhatsApp. When using the media parameter, ensure you are not using the sms parameter
+        
+
 
 
 
