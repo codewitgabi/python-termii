@@ -230,7 +230,7 @@ class Termii:
 
         response = requests.get(
             f"{self.__base_url}/phonebooks/{phonebook_id}/contacts?api_key={self.api_key}")
-        
+
         print(response.json())
         return response.json()
 
@@ -314,5 +314,205 @@ class Termii:
 
         response = requests.delete(
             f"{self.__base_url}/phonebook/contact/{contact_id}?api_key={self.api_key}")
+
+        return response.json()
+
+    def send_token(self, message_type: Literal["NUMERIC", "ALPHANUMERIC"], to: str, _from: str, channel: Literal["generic", "dnd", "whatsapp"], message_text: str, pin_time_to_live: int = 60, pin_attempts: int = 3, pin_length: int = 4, pin_placeholder: str = "< 1234 >") -> Response:
+        """
+        The send token API allows businesses trigger one-time-passwords (OTP) across any available messaging channel on Termii. One-time-passwords created are generated randomly and there's an option to set an expiry time.
+
+        Arguments:
+
+        message_type (str): Enum: "NUMERIC" "ALPHANUMERIC" Type of message that will be generated and sent as part of the OTP message. You can set message type to numeric or alphanumeric
+
+        to (str): Represents the email address if the channel is set to email (Example: testshola@termii.com). It represents the destination phone number if other channels are selected. Phone number must be in the international format (Example: 23490126727)
+
+        from (str): Represents the configuration ID if the channel is set to email (Example: 0a53c416-uocj-95af-ab3c306aellc). It can be found on your Termii dashboard. If other channels are selected, it represents a sender ID which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters (Example:CompanyName)
+
+        channel (Literal[generic, dnd, whatsapp]): This is the route through which the message is sent. It is either dnd, WhatsApp, or generic or email
+
+        pin_attempts (int): Example: 3
+        Represents the number of times the PIN can be attempted before expiration. It has a minimum of one attempt
+
+        pin_time_to_live (int): Example: 1
+        Represents how long the PIN is valid before expiration. The time is in minutes. The minimum time value is 0 and the maximum time value is 60
+
+        pin_length (int): Example: 4
+        The length of the PIN code.It has a minimum of 4 and maximum of 8.
+
+        pin_placeholder (str): Example: "< 1234 >"
+        PIN placeholder. Right before sending the message, PIN code placeholder will be replaced with generate PIN code.
+
+        message_text (str): Text of a message that would be sent to the destination phone number
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "message_type": message_type,
+            "to": to,
+            "from": _from,
+            "channel": channel,
+            "pin_attempts": pin_attempts,
+            "pin_time_to_live":  pin_time_to_live,
+            "pin_length": pin_length,
+            "pin_placeholder": pin_placeholder,
+            "message_text": message_text,
+            "pin_type": message_type
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/sms/otp/send", headers=headers, json=payload)
+
+        return response.json()
+
+    def voice_token(self, phone_number: str, pin_attempts: int, pin_time_to_live: int, pin_length: int) -> Response:
+        """
+        The voice token API enables you to generate and trigger one-time passwords (OTP) through the voice channel to a phone number. OTPs are generated and sent to the phone number and can only be verified using our Verify Token API .
+
+        Arguments:
+
+        phone_number (str): The destination phone number. Phone number must be in the international format (Example: 23490126727)
+
+        pin_attempts (int): Represents the number of times the PIN can be attempted before expiration. It has a minimum of one attempt
+
+        pin_time_to_live (int): Represents how long the PIN is valid before expiration. The time is in minutes. The minimum time value is 0 and the maximum time value is 60
+
+        pin_length (int): The length of the PIN code.It has a minimum of 4 and maximum of 8.
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "phone_number": phone_number,
+            "pin_attempts": pin_attempts,
+            "pin_time_to_live":  pin_time_to_live,
+            "pin_length": pin_length,
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/sms/otp/send/voice", headers=headers, json=payload)
+
+        return response.json()
+
+    def voice_call(self, phone_number: str, code: str) -> Response:
+        """
+        The voice call API enables you to send messages from your application through our voice channel to a phone number. Only one-time-passwords (OTP) are allowed for now and these OTPs can not be verified using our Verify Token API.
+
+        Arguments:
+
+        phone_number (str): The destination phone number. Phone number must be in the international format (Example: 23490126727)
+
+        code (str): Example: 3344
+        The code you want your users to receive. It has to be numeric and length must be between 4 and 8 digits.
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "phone_number": phone_number,
+            "code": code
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/sms/otp/send/voice", headers=headers, json=payload)
+
+        return response.json()
+
+    def email_token(self, email_address: str, code: str, email_configuration_id: str) -> Response:
+        """
+        The email token API enables you to send one-time-passwords from your application through our email channel to an email address. Only one-time-passwords (OTP) are allowed for now and these OTPs can not be verified using our Verify Token API.
+
+        Arguments:
+
+        email_address (str): Represents the email address you are sending to (Example: test@termii.com).
+
+        code (str): Represents the OTP sent to the email address
+
+        email_configuration_id (str): This is represents the email configuration you have added on your Termii dashboard. It can be found on your Termii dashboard.
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "email_address": email_address,
+            "code": code,
+            "email_configuration_id": email_configuration_id
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/email/otp/send", headers=headers, json=payload)
+
+        return response.json()
+
+    def verify_token(self, pin_id: str, pin: str) -> Response:
+        """
+        Verify token API, checks tokens sent to customers and returns a response confirming the status of the token. A token can either be confirmed as verified or expired based on the timer set for the token.
+
+        Arguments:
+
+        pin_id (str): ID of the PIN sent (Example: "c8dcd048-5e7f-4347-8c89-4470c3af0b")
+
+        pin (str): The PIN code (Example: "195558")
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "pin_id": pin_id,
+            "pin": pin
+        }
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        response = requests.post(
+            f"{self.__base_url}/sms/otp/verify", headers=headers, json=payload)
+
+        return response.json()
+
+    def generate_token(self, pin_type: Literal["NUMERIC", "ALPHANUMERIC"], phone_number: str, pin_attempts: int, pin_time_to_live: int, pin_length: int) -> Response:
+        """
+        This API returns OTP codes in JSON format which can be used within any web or mobile app. Tokens are numeric or alpha-numeric codes generated to authenticate login requests and verify customer transactions.
+
+        Arguments:
+
+        pin_type (Literal["NUMERIC], "ALPHANUMERIC]): Enum: "NUMERIC" "ALPHANUMERIC"
+        Type of PIN code that will be generated and sent as part of the OTP message. You can set PIN type to numeric or alphanumeric
+
+        phone_number (str): The destination phone number. Phone number must be in the international format (Example: 23490126727)
+
+        pin_attempts (int): Represents the number of times the PIN can be attempted before expiration. It has a minimum of one attempt
+
+        pin_time_to_live (int): Represents how long the PIN is valid before expiration. The time is in minutes. The minimum time value is 0 and the maximum time value is 60
+
+        pin_length (int): The length of the PIN code. It has a minimum of 4 and maximum of 8.
+        """
+
+        payload = {
+            "api_key": self.api_key,
+            "pin_type": pin_type,
+            "phone_number": phone_number,
+            "pin_attempts": pin_attempts,
+            "pin_time_to_live": pin_time_to_live,
+            "pin_length": pin_length
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        response = requests.post(
+            f"{self.__base_url}/sms/otp/generate", headers=headers, json=payload)
 
         return response.json()
