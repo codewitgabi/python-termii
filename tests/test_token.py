@@ -6,7 +6,7 @@ The send token API allows businesses trigger one-time-passwords (OTP) across any
 
 import os
 from unittest import TestCase
-from termii import Termii
+from src.termii.termii import Termii
 
 
 class TestToken(TestCase):

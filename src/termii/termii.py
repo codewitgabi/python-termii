@@ -302,8 +302,7 @@ class Termii:
             'Content-Type': 'application/json',
         }
 
-        response = requests.post(f"{self.__base_url}/phonebooks/{
-                                 phonebook_id}/contacts", headers=headers, data=payload, files=files)
+        response = requests.post(f"{self.__base_url}/phonebooks/{phonebook_id}/contacts", headers=headers, data=payload, files=files)
 
         return response.json()
 

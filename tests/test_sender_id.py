@@ -1,6 +1,6 @@
 import os
 from unittest import TestCase
-from termii import Termii
+from src.termii.termii import Termii
 
 
 class TestSenderID(TestCase):

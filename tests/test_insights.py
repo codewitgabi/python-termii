@@ -6,7 +6,7 @@ The Balance API returns your total balance and balance information from your wal
 
 import os
 from unittest import TestCase
-from termii import Termii
+from src.termii.termii import Termii
 
 
 class TestInsights(TestCase):

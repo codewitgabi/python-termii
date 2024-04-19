@@ -1,4 +1,5 @@
-<h1 align="center">Termii Python Client</h1>
+<h1 align="center">Termii Python Client <img alt="Static Badge" src="https://img.shields.io/badge/termii-python-client?style=for-the-badge&logo=github&logoColor=%23000">
+</h1>
 <br><br>
 
 <div align="center">
@@ -47,7 +48,7 @@ Before delving into the usage, you need the following:
 
 ```python
 import os
-from termii import Termii
+from termii.termii import Termii
 
 # get your api-key
 api_key = os.environ.get("TERMII_API_KEY")
@@ -61,7 +62,7 @@ termii = Termii(api_key, sender_id)
 ```python
 import os
 from typing import Union, Literal
-from termii import Termii
+from termii.termii import Termii
 
 termii = Termii(os.environ.get("TERMII_API_KEY"), os.environ.get("TERMII_SENDER_ID"))
 
@@ -91,7 +92,7 @@ termii.voice_token(phone_number: str, pin_attempts: int, pin_time_to_live: int, 
 
 To get more detail about a particular method, use the python help() function
 
-#### Contributors
+### Contributors
 
 - Gabriel Michael Ojomakpene [codewitgabi]
 - Joseph Joshua

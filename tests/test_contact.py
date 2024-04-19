@@ -5,7 +5,7 @@ Contacts API allows you manage (i.e. edit, update, & delete) contacts in your ph
 # imports
 
 import os
-from termii import Termii
+from src.termii.termii import Termii
 from unittest import TestCase
 
 

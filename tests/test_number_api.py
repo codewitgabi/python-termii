@@ -6,7 +6,7 @@ This API allows businesses send messages to customers using Termii's auto-genera
 
 import os
 from unittest import TestCase
-from termii import Termii
+from src.termii.termii import Termii
 
 
 class TestNumberAPI(TestCase):

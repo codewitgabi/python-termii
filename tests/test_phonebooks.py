@@ -7,7 +7,7 @@ Create, view & manage phonebooks using these APIs. Each phonebook can be identif
 import os
 from unittest import TestCase
 import unittest
-from termii import Termii
+from src.termii.termii import Termii
 
 
 class TestPhonebook(TestCase):
