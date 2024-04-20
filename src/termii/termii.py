@@ -152,7 +152,6 @@ class Termii:
         response = requests.get(
             f"{self.__base_url}/phonebooks?api_key={self.api_key}")
 
-        print(response.json())
         return response.json()
 
     def create_phonebook(self, phonebook_name: str, description: Optional[str] = None) -> Response:
@@ -233,8 +232,6 @@ class Termii:
 
         response = requests.get(
             f"{self.__base_url}/phonebooks/{phonebook_id}/contacts?api_key={self.api_key}")
-
-        print(response.json())
         return response.json()
 
     def add_contact(self, phonebook_id: str, phone_number: str, country_code: Optional[int] = None, email_address: Optional[str] = None, first_name: Optional[str] = None, last_name: Optional[str] = None, company: Optional[str] = None) -> Response:
